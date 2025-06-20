@@ -9,6 +9,7 @@ namespace Assignment2
     
     class Program
     {
+        //swapping two numbers
         public static void FirstQuestion()
         {
             Console.Write("Enter First number: ");
@@ -21,6 +22,8 @@ namespace Assignment2
             a = a - b;
             Console.WriteLine($"After swapping N1={a} and N2={b}");
         }
+
+        //pattern
         public static void SecondQuestion()
         {
             Console.WriteLine("Enter a number: ");
@@ -41,6 +44,7 @@ namespace Assignment2
 
         }
         
+        //Days
         public static void ThirdQuestion()
         {
            

@@ -8,12 +8,15 @@ namespace Assignment2
 {
     class StringsQuestions
     {
+        //length of the string
         public static void FirstQuestion()
         {
             Console.WriteLine("Enter the string: ");
             string str = Console.ReadLine();
             Console.WriteLine("Length of the string is  " + str.Length);
         }
+
+        //string reverse
         public static void SecondQuestion()
         {
             Console.WriteLine("Enter a word: ");
@@ -25,6 +28,7 @@ namespace Assignment2
             }
             Console.WriteLine("Reversed Word: " + reversedWord);
         }
+        //string comparision
         public static void ThirdQuestion()
         {
             Console.WriteLine("Enter the First word: ");

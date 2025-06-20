@@ -8,6 +8,7 @@ namespace Assignment2
 {
     class ArraysQuestions
     {
+        //Avg, min, max
         public static void FirstQuestion()
         {
             Console.WriteLine("Enter the number of Elements: ");
@@ -38,11 +39,12 @@ namespace Assignment2
             Console.WriteLine("Maximum value: " + max);
         }
 
+        //marks data
         public static void SecondQuestion()
         {
             int n = 10;
             int[] arr = new int[n];
-            Console.WriteLine("Enter the marks: ");
+            Console.WriteLine("Enter the 10 subject marks: ");
             for (int i = 0; i < n; i++)
             {
                 arr[i] = Convert.ToInt32(Console.ReadLine());
@@ -66,13 +68,14 @@ namespace Assignment2
             Console.WriteLine("Average value : " + avg);
             Console.WriteLine("Minimum marks : " + min);
             Console.WriteLine("Maximum marks: " + max);
-            Array.Sort(arr);
 
+            Array.Sort(arr);
             Console.WriteLine("Marks in Ascending order :");
             for (int i = 0; i < n; i++)
             {
                 Console.Write(arr[i] + " ");
             }
+
             Array.Reverse(arr);
             Console.WriteLine("Marks in descending order :");
             for (int i = 0; i < n; i++)
@@ -82,6 +85,7 @@ namespace Assignment2
 
         }
 
+        //Array copy
         public static void ThirdQuestion()
         {
             Console.WriteLine("Enter the number of elements: ");
@@ -106,9 +110,9 @@ namespace Assignment2
        
         public static void Main(String[] args)
         {
-            ////FirstQuestion();
+            FirstQuestion();
             SecondQuestion();
-            //ThirdQuestion();
+            ThirdQuestion();
             Console.Read();
         }
     }
