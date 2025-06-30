@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assignment4
 {
+    //Employee Management System
     class Employee
     {
         public int ID { get; set; }
@@ -13,7 +14,6 @@ namespace Assignment4
         public string Department { get; set; }
         public double Salary { get; set; }
     }
-
     class EmployeeData
     {
         static List<Employee> employeeList = new List<Employee>();
