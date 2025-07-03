@@ -15,15 +15,18 @@ namespace Assignment5
     //Identify and categorize all possible checked and unchecked exception.
     class InSufficientBalanceException: ApplicationException
     {
-        public InSufficientBalanceException(string message) : base(message) { }
+        public InSufficientBalanceException(string message) : base(message) 
+        {
+            
+        }
     }
     class BankAccount
     {
-        string accountHolder;
+        string accountHolderName;
         double balance;
         public BankAccount(string name, double initialBalance)
         {
-            accountHolder = name;
+            accountHolderName = name;
             balance = initialBalance;
         }
         public void Deposit(double amount)
@@ -36,23 +39,30 @@ namespace Assignment5
             if (amount > balance)
                 throw new InSufficientBalanceException("Insufficient balance for withdrawel");
             balance -= amount;
-            Console.WriteLine($"Balance for {accountHolder}: {balance}");
+            Console.WriteLine($"Balance for {accountHolderName}: {balance}");
         }
         public void DisplayBalance()
         {
-            Console.WriteLine($"Balance for {accountHolder}:{balance}");
+            Console.WriteLine($"Balance for {accountHolderName}:{balance}");
         }
     }
     class Program
     {
         static void Main(string[] args)
         {
-            BankAccount account = new BankAccount("jahnavi", 10000);
-            account.Deposit(500);
-            account.DisplayBalance();
+            Console.WriteLine("Enter Account Holder Name: ");
+            string name = Console.ReadLine();
+            Console.WriteLine("Enter Initial Balance: ");
+            double initialbalance = Convert.ToDouble(Console.ReadLine());
+            BankAccount account = new BankAccount(name,initialbalance);
+            Console.WriteLine("Enter Amount to deposit: ");
+            double deposit = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("Enter Amount to withdraw: ");
+            double withdraw = Convert.ToDouble(Console.ReadLine());
+           
             try
             {
-                account.withdraw(20000);
+                account.withdraw(withdraw);
             }
             catch(InSufficientBalanceException ex)
             {

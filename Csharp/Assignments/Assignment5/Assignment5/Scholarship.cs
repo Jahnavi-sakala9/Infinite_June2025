@@ -14,7 +14,10 @@ namespace Assignment5
     //In all the cases return the Scholarship amount, else throw an user exception
     class InvalidMarkException : ApplicationException
     {
-        public InvalidMarkException(string message) : base(message) { }
+        public InvalidMarkException(string message) : base(message) 
+        {
+            
+        }
     }
     class Scholarship
     {
@@ -27,7 +30,7 @@ namespace Assignment5
                 scholarship = 0.3 * fees;
             else
                 throw new InvalidMarkException("Marks too low for scholarship");
-            Console.WriteLine($"Scholarship awarded:{scholarship}");
+            Console.WriteLine($"Scholarship awarded : {scholarship}");
         }
         public static void Main()
         {
@@ -43,6 +46,7 @@ namespace Assignment5
             {
                 Console.WriteLine("Message: " + ex.Message);
             }
+            Console.Read();
         }
     }
 }

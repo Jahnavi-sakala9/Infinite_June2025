@@ -46,8 +46,18 @@ namespace Assignment5
         public static void Main()
         {
             BookShelf shelf = new BookShelf();
-            shelf[0] = new Book("Wings of Fire", "A.P.J Abdul Kalam");
+            Console.WriteLine("Enter the number of books:");
+            int n = Convert.ToInt32(Console.ReadLine());
+            for(int i = 0; i < n; i++)
+            {
+                Console.WriteLine($"Enter Book {i + 1} Name: ");
+                string bookName = Console.ReadLine();
+                Console.WriteLine($"Enter Author {i + 1} Name: ");
+                string authorName = Console.ReadLine();
+                shelf[i] = new Book(bookName, authorName);
+            }
             shelf.DisplayBooks();
+            Console.Read();
         }
     }
 }
