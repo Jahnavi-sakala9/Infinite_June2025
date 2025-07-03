@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assignment4
 {
+    //Events and Delegate
     public delegate void RingEventHandler();
     class MobilePhone
     {
