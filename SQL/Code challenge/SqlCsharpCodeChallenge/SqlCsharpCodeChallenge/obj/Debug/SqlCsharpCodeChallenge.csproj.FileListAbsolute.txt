@@ -1,0 +1,7 @@
+C:\Jahnavi\Infinite\SQL\Code challenge\SqlCsharpCodeChallenge\SqlCsharpCodeChallenge\bin\Debug\SqlCsharpCodeChallenge.exe.config
+C:\Jahnavi\Infinite\SQL\Code challenge\SqlCsharpCodeChallenge\SqlCsharpCodeChallenge\bin\Debug\SqlCsharpCodeChallenge.exe
+C:\Jahnavi\Infinite\SQL\Code challenge\SqlCsharpCodeChallenge\SqlCsharpCodeChallenge\bin\Debug\SqlCsharpCodeChallenge.pdb
+C:\Jahnavi\Infinite\SQL\Code challenge\SqlCsharpCodeChallenge\SqlCsharpCodeChallenge\obj\Debug\SqlCsharpCodeChallenge.csproj.AssemblyReference.cache
+C:\Jahnavi\Infinite\SQL\Code challenge\SqlCsharpCodeChallenge\SqlCsharpCodeChallenge\obj\Debug\SqlCsharpCodeChallenge.csproj.CoreCompileInputs.cache
+C:\Jahnavi\Infinite\SQL\Code challenge\SqlCsharpCodeChallenge\SqlCsharpCodeChallenge\obj\Debug\SqlCsharpCodeChallenge.exe
+C:\Jahnavi\Infinite\SQL\Code challenge\SqlCsharpCodeChallenge\SqlCsharpCodeChallenge\obj\Debug\SqlCsharpCodeChallenge.pdb
