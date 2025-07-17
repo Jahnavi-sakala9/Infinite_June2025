@@ -79,14 +79,14 @@ namespace SqlCsharpCodeChallenge
                     break;
 
                 case 3:
-                    Console.WriteLine("\nEmployees with Title 'AsstManager':");
+                    Console.WriteLine("Employees with Title 'AsstManager':");
                     var asstManagers = empList.Where(e => e.Title == "AsstManager");
                     foreach (var emp in asstManagers)
                         PrintEmployee(emp);
                     break;
 
                 case 4:
-                    Console.WriteLine("\nEmployees whose last name starts with 'S':");
+                    Console.WriteLine("Employees whose last name starts with 'S':");
                     var lastNameStartsWithS = empList.Where(e => e.LastName.StartsWith("S"));
                     foreach (var emp in lastNameStartsWithS)
                         PrintEmployee(emp);
