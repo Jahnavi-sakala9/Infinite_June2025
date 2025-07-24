@@ -1,0 +1,54 @@
+****************************************************1NF Table**************************************************
+
+ClientNo  cName	        PropertyNo	pAddress	rentStart	rentFinish	rent	ownerNo	oName
+CR76	  John Kay	PG4	6 Lawrence St, Glasgow	1-Jul-00	31-Aug-01	350	CO40	Tina Murphy
+CR76	  John Kay	PG16	5 Novar Dr, Glasgow	1-Sep-02	1-Sep-02	450	C093	Tony Shaw
+CR56	Aline Stewart	PG4	6 Lawrence St, Glasgow	1-Sep-99	10-Jun-00	350	CO40	Tina Murphy
+CR56	Aline Stewart	PG36	2 Manor Rd, Glasgow	10-Oct-00	1-Dec-01	370	C093	Tony Shaw
+CR56	Aline Stewart	PG16	5 Novar Dr, Glasgow	1-Nov-02	1-Aug-03	450	C093	Tony Shaw
+
+
+**************************************************2NF Clients Table***********************************************
+
+ClientNo  cName
+CR76	  John Kay
+CR56	  Aline Stewart
+
+*********************************************2NF propertys Table**************************************************
+PropertyNo	pAddress	        OwnerNo
+PG4	        6 Lawrence St, Glasgow	CO40
+PG16	        5 Novar Dr, Glasgow	C093
+PG36	        2 Manor Rd, Glasgow	C093
+
+*********************************************2NF Rentals Table**************************************************
+ClientNo PropertyNo	rentStart	rentFinish	rent
+CR76	 PG4		1-Jul-00	31-Aug-01	350
+CR76	 PG16		1-Sep-02	1-Sep-02	450
+CR56	 PG4		1-Sep-99	10-Jun-00	350
+CR56	 PG36		10-Oct-00	1-Dec-01	370
+CR56	 PG16		1-Nov-02	1-Aug-03	450
+
+*********************************************3NF Clients Table**************************************************
+ClientNo	cName
+CR76		John Kay
+CR56		Aline Stewart
+
+*********************************************3NF Propertys Table**************************************************
+PropertyNo	pAddress		OwnerNo
+PG4		6 Lawrence St, Glasgow	CO40
+PG16		5 Novar Dr, Glasgow	C093
+PG36		2 Manor Rd, Glasgow	C093
+
+*********************************************3NF owners Table**************************************************
+OwnerNo	OName
+CO40	Tina Murphy
+C093	Tony Shaw
+
+*********************************************3NF Rentals Table**************************************************
+ClientNo	PropertyNo	rentStart	rentFinish	rent
+CR76		PG4		1-Jul-00	31-Aug-01	350
+CR76		PG16		1-Sep-02	1-Sep-02	450
+CR56		PG4		1-Sep-99	10-Jun-00	350
+CR56		PG36		10-Oct-00	1-Dec-01	370
+CR56		PG16		1-Nov-02	1-Aug-03	450
+
