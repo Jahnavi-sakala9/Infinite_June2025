@@ -1,0 +1,7 @@
+C:\Jahnavi\Infinite\ADO\Assignments\Assignment1\Assignment1\bin\Debug\Assignment1.exe.config
+C:\Jahnavi\Infinite\ADO\Assignments\Assignment1\Assignment1\bin\Debug\Assignment1.exe
+C:\Jahnavi\Infinite\ADO\Assignments\Assignment1\Assignment1\bin\Debug\Assignment1.pdb
+C:\Jahnavi\Infinite\ADO\Assignments\Assignment1\Assignment1\obj\Debug\Assignment1.csproj.AssemblyReference.cache
+C:\Jahnavi\Infinite\ADO\Assignments\Assignment1\Assignment1\obj\Debug\Assignment1.csproj.CoreCompileInputs.cache
+C:\Jahnavi\Infinite\ADO\Assignments\Assignment1\Assignment1\obj\Debug\Assignment1.exe
+C:\Jahnavi\Infinite\ADO\Assignments\Assignment1\Assignment1\obj\Debug\Assignment1.pdb
