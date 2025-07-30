@@ -1,0 +1,7 @@
+C:\Jahnavi\Infinite\ADO\Code Challenge\Code_Challenge_6\Code_Challenge_6\bin\Debug\Code_Challenge_6.exe.config
+C:\Jahnavi\Infinite\ADO\Code Challenge\Code_Challenge_6\Code_Challenge_6\bin\Debug\Code_Challenge_6.exe
+C:\Jahnavi\Infinite\ADO\Code Challenge\Code_Challenge_6\Code_Challenge_6\bin\Debug\Code_Challenge_6.pdb
+C:\Jahnavi\Infinite\ADO\Code Challenge\Code_Challenge_6\Code_Challenge_6\obj\Debug\Code_Challenge_6.csproj.AssemblyReference.cache
+C:\Jahnavi\Infinite\ADO\Code Challenge\Code_Challenge_6\Code_Challenge_6\obj\Debug\Code_Challenge_6.csproj.CoreCompileInputs.cache
+C:\Jahnavi\Infinite\ADO\Code Challenge\Code_Challenge_6\Code_Challenge_6\obj\Debug\Code_Challenge_6.exe
+C:\Jahnavi\Infinite\ADO\Code Challenge\Code_Challenge_6\Code_Challenge_6\obj\Debug\Code_Challenge_6.pdb
