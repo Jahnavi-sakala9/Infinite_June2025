@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F6DE0679-292E-41EA-B5BD-1B7D0A866154}</ProjectGuid>
+    <ProjectGuid>{49C60B5A-1A8D-4249-A589-31A9526BC4DE}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Assignment2</RootNamespace>
-    <AssemblyName>Assignment2</AssemblyName>
+    <RootNamespace>To_do_list</RootNamespace>
+    <AssemblyName>To-do-list</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -50,10 +50,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="index.html" />
-    <Content Include="Image1.jpg" />
-    <Content Include="Ratan_Tata.jpg" />
-    <Content Include="TributePage.html" />
+    <Content Include="Todolist.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
