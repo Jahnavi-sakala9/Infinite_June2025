@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+    <h2>Apply Background to h1 Elements That Are Children of div</h2>
+
+    <div>
+        <h1>Heading 1 (h1tag) inside div</h1>
+        <p>Paragraph inside div</p>
+    </div>
+
+    <div>
+        <h1>Heading 2(h1 tag) inside div</h1>
+    </div>
+    
+    <h1>H1 outside div</h1>
+
+    <script>
+        // Apply background color to h1 elements that are direct children of a div
+        $('div > h1').css('background-color', 'lightblue');
+    </script>
+</body>
+</html>
+

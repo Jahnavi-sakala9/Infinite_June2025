@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1>Odd or Even Numbers (0 to 15)</h1>
+    <div id="output"></div>
+
+    <script>
+        for (var i = 0; i <= 15; i++) {
+            var text = i + " is " + (i % 2 === 0 ? "even" : "odd");
+            document.getElementById("output").innerHTML += text + "</p>";
+        }
+    </script>
+</body>
+</html>
+
+

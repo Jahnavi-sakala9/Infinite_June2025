@@ -19,18 +19,20 @@ values
 ('Jay', 50000.00, 'M')
 
 
-create procedure update_employee_salary
-    @empid int,
-    @updatedsalary decimal(10,2) output
+create procedure insert_employee
+    @name varchar(100),
+    @givensalary int,
+    @gender char(1),
+    @generatedempid int output,
+    @calculatedsalary decimal(10,2) output
 as
 begin
-    update employee2
-    set salary = salary + 100
-    where empid = @empid;
-
-    select @updatedsalary = salary
-    from employee2
-    where empid = @empid;
+    set @calculatedsalary = @givensalary * 0.9;
+ 
+    insert into employee2 (name, salary, gender)
+    values (@name, @calculatedsalary, @gender);
+ 
+    set @generatedempid = scope_identity();
 end;
 
 

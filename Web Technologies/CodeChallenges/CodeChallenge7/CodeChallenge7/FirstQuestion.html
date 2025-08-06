@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: lightseagreen;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Multiplication & Division Calculator</h2>
+
+        <label>1st Number:</label>
+        <input type="number" id="num1"><br>
+        <label>2nd Number:</label>
+        <input type="number" id="num2"><br>
+
+        <button onclick="multiply()">Multiply</button>
+        <button onclick="divide()">Divide</button>
+
+        <div id="result"></div>
+    </div>
+    <script>
+        // Function to perform multiplication
+        function multiply() {
+            let a = parseFloat(document.getElementById("num1").value);
+            let b = parseFloat(document.getElementById("num2").value);
+            let result = a * b;
+
+            document.getElementById("result").innerText = "Multiplication Result: " + result;
+        }
+
+        // Function to perform division
+        function divide() {
+            let a = parseFloat(document.getElementById("num1").value);
+            let b = parseFloat(document.getElementById("num2").value);
+
+            // Check for division by zero
+            if (b === 0) {
+                document.getElementById("result").innerText = "Error: Division by zero is not allowed.";
+            } else {
+                let result = a / b;
+                document.getElementById("result").innerText = "Division Result: " + result;
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+    
+
+   
+
