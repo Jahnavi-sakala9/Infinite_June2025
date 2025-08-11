@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DF9B01AD-CC43-4D93-A57F-EDD190B24FC3}</ProjectGuid>
+    <ProjectGuid>{633B2967-A6B5-468D-9997-F10C6CB8C8F6}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>CodeChallenge7</RootNamespace>
-    <AssemblyName>CodeChallenge7</AssemblyName>
+    <RootNamespace>MiniProject_RRS</RootNamespace>
+    <AssemblyName>MiniProject_RRS</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,21 +43,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Menus\AdminMenu.cs" />
+    <Compile Include="Services\AdminService.cs" />
+    <Compile Include="Services\AuthService.cs" />
+    <Compile Include="Models\Booking.cs" />
+    <Compile Include="Repos\BookingRepo.cs" />
+    <Compile Include="Services\BookingService.cs" />
+    <Compile Include="Data\Db.cs" />
+    <Compile Include="Menus\MainMenu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\Train.cs" />
+    <Compile Include="Models\TrainClass.cs" />
+    <Compile Include="Repos\TrainRepo.cs" />
+    <Compile Include="Menus\User.cs" />
+    <Compile Include="Menus\UserMenu.cs" />
+    <Compile Include="Repos\UserRepo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="EightQuestion.html" />
-    <Content Include="FifthQuestion.html" />
-    <Content Include="FirstQuestion.html" />
-    <Content Include="FourthQuestion.html" />
-    <Content Include="SecondQuestion.html" />
-    <Content Include="SeventhQuestion.html" />
-    <Content Include="SixthQuestion.html" />
-    <Content Include="ThirdQuestion.html" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
