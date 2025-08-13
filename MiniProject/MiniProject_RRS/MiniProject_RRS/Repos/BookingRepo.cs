@@ -18,30 +18,43 @@ namespace MiniProject_RRS
 
             using (SqlDataReader rd = cmd.ExecuteReader())
             {
-                if (!rd.HasRows)
-                {
-                    Console.WriteLine("No bookings found.");
-                    return;
-                }
+                //if (!rd.HasRows)
+                //{
+                //    Console.WriteLine("No bookings found.");
+                //    return;
+                //}
 
-                Console.WriteLine("Id TrainNo TrainName Class Qty Date Total Cancelled");
+
+                if (!rd.HasRows) { Ui.Warn("No bookings found."); return; }
+                Ui.TableHeader("Id", "TrainNo", "TrainName", "Class", "Qty", "Date", "Total", "Cancelled");
+
+                //Console.WriteLine("Id  TrainNo  TrainName           Class   Qty   Date       Total  Cancelled");
                 while (rd.Read())
                 {
-                    Console.WriteLine(string.Format("{0,-3} {1,-6} {2,-16} {3,-5} {4,3} {5:yyyy-MM-dd} {6,6} {7}",
-                        rd.GetInt32(0),
-                        rd.GetString(1),
-                        rd.GetString(2),
-                        rd.GetString(3),
-                        rd.GetInt32(4),
-                        rd.GetDateTime(5),
-                        rd.GetDecimal(6),
-                        rd.GetBoolean(7) ? "Yes" : "No"));
+                    Console.WriteLine(string.Format("{0,-3} {1,-8} {2,-18} {3,-7} {4,-4} {5:yyyy-MM-dd} {6,8} {7,-9}",
+                        rd.GetInt32(0),         // Id
+                        rd.GetString(1),        // TrainNo
+                        rd.GetString(2),        // TrainName
+                        rd.GetString(3),        // Class
+                        rd.GetInt32(4),         // Qty
+                        rd.GetDateTime(5),      // Date
+                        rd.GetDecimal(6),       // Total
+                        rd.GetBoolean(7) ? "Yes" : "No")); // Cancelled
                 }
+
             }
         }
 
         public void Book(int uid, int trainId, string cls, int qty, DateTime dt)
-        {
+        {//
+            //if (dt.Date < DateTime.Today)
+            //{
+            //    Console.WriteLine("Travel date cannot be in the past. Please choose today or a future date.");
+            //    return;
+            //}
+
+            if (dt.Date < DateTime.Today) { Ui.Warn("Travel date cannot be in the past."); return; }
+            //
             SqlTransaction tx = Db.I.Conn.BeginTransaction();
             try
             {
@@ -58,7 +71,7 @@ namespace MiniProject_RRS
                 {
                     if (!rd.Read())
                     {
-                        Console.WriteLine("Invalid train/class.");
+                        Ui.Error("Invalid train/class.");
                         rd.Close();
                         tx.Rollback();
                         return;

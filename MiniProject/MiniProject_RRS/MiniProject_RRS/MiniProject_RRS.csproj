@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Repos\DashboardRepo.cs" />
     <Compile Include="Menus\AdminMenu.cs" />
     <Compile Include="Services\AdminService.cs" />
     <Compile Include="Services\AuthService.cs" />
@@ -56,9 +57,10 @@
     <Compile Include="Models\Train.cs" />
     <Compile Include="Models\TrainClass.cs" />
     <Compile Include="Repos\TrainRepo.cs" />
-    <Compile Include="Menus\User.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Menus\UserMenu.cs" />
     <Compile Include="Repos\UserRepo.cs" />
+    <Compile Include="Models\Ui.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

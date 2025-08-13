@@ -10,73 +10,84 @@ namespace MiniProject_RRS
         {
             while (true)
             {
-                Console.WriteLine($"\n-- Admin: {uname} --");
+                Ui.Banner("Admin: " + uname);
                 Console.WriteLine("1) Add Train");
                 Console.WriteLine("2) Delete Train");
                 Console.WriteLine("3) Update Train");
                 Console.WriteLine("4) View All Trains");
                 Console.WriteLine("5) View Train Classes");
-                Console.WriteLine("6) Add Train Class");
+                Console.WriteLine("6) Add/Update Train Class");
                 Console.WriteLine("7) View All Bookings");
                 Console.WriteLine("8) View All Cancellations");
+                Console.WriteLine("9) Dashboard");
                 Console.WriteLine("0) Logout");
                 Console.Write("Choice: ");
                 string choice = Console.ReadLine();
 
                 if (choice == "1")
                 {
-                    Console.Write("Train No: ");
-                    string no = Console.ReadLine();
-                    Console.Write("Train Name: ");
-                    string name = Console.ReadLine();
-                    Console.Write("Source: ");
-                    string src = Console.ReadLine();
-                    Console.Write("Destination: ");
-                    string dst = Console.ReadLine();
-                    admin.AddTrain(no, name, src, dst);
+                    Console.Write("Train No: "); string no = Console.ReadLine();
+                    Console.Write("Train Name: "); string name = Console.ReadLine();
+                    Console.Write("Source: "); string src = Console.ReadLine();
+                    Console.Write("Destination: "); string dst = Console.ReadLine();
+                    bool ok = new TrainRepo().AddTrain(no, name, src, dst);
+                    if (ok) Ui.Success("Train added.");
+                    else Ui.Error("Failed to add train (duplicate TrainNo?).");
+                    Ui.Pause();
                 }
                 else if (choice == "2")
                 {
                     int id = ReadInt("TrainId to delete: ");
-                    admin.DeleteTrain(id);
+                    bool ok = admin.DeleteTrain(id);
+                    if (ok) Ui.Success("Train deleted.");
+                    else Ui.Warn("No train deleted (invalid id?).");
+                    Ui.Pause();
                 }
                 else if (choice == "3")
                 {
-                    int id;
-                    while (true)
-                    {
-                        Console.Write("Enter TrainId: ");
-                        if (int.TryParse(Console.ReadLine(), out id))
-                            break;
-                        Console.WriteLine("Invalid input. Please enter a valid integer.");
-                    }
-
-                    admin.UpdateTrain(id);
+                    int id = ReadInt("Enter TrainId: ");
+                    admin.UpdateTrain(id);               // your implementation
+                    Ui.Success("Train updated (if data changed).");
+                    Ui.Pause();
                 }
                 else if (choice == "4")
                 {
+                    Ui.Banner("All Trains");
                     admin.ViewAllTrains();
+                    Ui.Pause();
                 }
                 else if (choice == "5")
                 {
+                    Ui.Banner("Train Classes");
                     admin.ViewTrainClasses();
+                    Ui.Pause();
                 }
                 else if (choice == "6")
                 {
                     int trainId = ReadInt("TrainId: ");
-                    Console.Write("Class (e.g., Sleeper, 3AC): ");
-                    string cls = Console.ReadLine();
+                    Console.Write("Class (e.g., Sleeper, 3AC): "); string cls = Console.ReadLine();
                     int seats = ReadInt("Total Seats: ");
                     decimal price = ReadDecimal("Price per seat: ");
                     admin.AddTrainClass(trainId, cls, seats, price);
+                    Ui.Success("Class upserted for train.");
+                    Ui.Pause();
                 }
                 else if (choice == "7")
                 {
+                    Ui.Banner("All Bookings");
                     admin.ViewAllBookings();
+                    Ui.Pause();
                 }
                 else if (choice == "8")
                 {
+                    Ui.Banner("All Cancellations");
                     admin.ViewAllCancellations();
+                    Ui.Pause();
+                }
+                else if (choice == "9")
+                {
+                    new DashboardRepo().AdminDashboard();
+                    Ui.Pause();
                 }
                 else if (choice == "0")
                 {
@@ -84,7 +95,7 @@ namespace MiniProject_RRS
                 }
                 else
                 {
-                    Console.WriteLine("Invalid choice.");
+                    Ui.Warn("Invalid choice.");
                 }
             }
         }
@@ -94,8 +105,9 @@ namespace MiniProject_RRS
             while (true)
             {
                 Console.Write(prompt);
-                if (int.TryParse(Console.ReadLine(), out int v)) return v;
-                Console.WriteLine("Enter a valid integer.");
+                int v;
+                if (int.TryParse(Console.ReadLine(), out v)) return v;
+                Ui.Warn("Invalid input. Please enter a valid integer.");
             }
         }
 
@@ -104,8 +116,9 @@ namespace MiniProject_RRS
             while (true)
             {
                 Console.Write(prompt);
-                if (decimal.TryParse(Console.ReadLine(), out decimal v)) return v;
-                Console.WriteLine("Enter a valid decimal.");
+                decimal v;
+                if (decimal.TryParse(Console.ReadLine(), out v)) return v;
+                Ui.Warn("Invalid input. Please enter a valid decimal.");
             }
         }
     }

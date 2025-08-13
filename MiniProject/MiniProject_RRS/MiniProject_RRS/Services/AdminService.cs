@@ -5,235 +5,146 @@ namespace MiniProject_RRS
 {
     public class AdminService
     {
-        private readonly TrainRepo _repo = new TrainRepo();
+        private readonly TrainRepo trains = new TrainRepo();
 
-        public void AddTrain(string no, string name, string source, string destination)
+        public bool DeleteTrain(int trainId)
         {
-            _repo.AddTrain(no, name, source, destination);
-        }
-
-        public void DeleteTrain(int trainId)
-        {
-            SqlTransaction tx = Db.I.Conn.BeginTransaction();
-            try
+            // Soft delete the train and its classes so history/reservations remain intact
+            using (var tx = Db.I.Conn.BeginTransaction())
             {
-                SqlCommand delTrain = new SqlCommand(
-                    "UPDATE Trains SET IsDeleted = 1 WHERE TrainId = @id", Db.I.Conn, tx);
-                delTrain.Parameters.AddWithValue("@id", trainId);
-                delTrain.ExecuteNonQuery();
+                try
+                {
+                    // mark classes deleted
+                    var cmd1 = new SqlCommand(
+                        "UPDATE TrainClasses SET IsDeleted = 1 WHERE TrainId = @id",
+                        Db.I.Conn, tx);
+                    cmd1.Parameters.AddWithValue("@id", trainId);
+                    cmd1.ExecuteNonQuery();
 
-                SqlCommand delClasses = new SqlCommand(
-                    "UPDATE TrainClasses SET IsDeleted = 1 WHERE TrainId = @id", Db.I.Conn, tx);
-                delClasses.Parameters.AddWithValue("@id", trainId);
-                delClasses.ExecuteNonQuery();
+                    // mark train deleted
+                    var cmd2 = new SqlCommand(
+                        "UPDATE Trains SET IsDeleted = 1 WHERE TrainId = @id",
+                        Db.I.Conn, tx);
+                    cmd2.Parameters.AddWithValue("@id", trainId);
+                    int rows = cmd2.ExecuteNonQuery();
 
-                tx.Commit();
-                Console.WriteLine("Train and its classes marked as deleted.");
-            }
-            catch (Exception ex)
-            {
-                tx.Rollback();
-                Console.WriteLine("Failed to delete train: " + ex.Message);
+                    tx.Commit();
+                    if (rows > 0) Ui.Success("Train marked as deleted.");
+                    else Ui.Warn("No train found with that id.");
+                    return rows > 0;
+                }
+                catch (Exception ex)
+                {
+                    tx.Rollback();
+                    Ui.Error("Failed to delete (soft): " + ex.Message);
+                    return false;
+                }
             }
         }
 
 
         public void UpdateTrain(int trainId)
         {
-            Console.WriteLine("Choose what to update:");
-            Console.WriteLine("1) Train No");
-            Console.WriteLine("2) Train Name");
-            Console.WriteLine("3) Source");
-            Console.WriteLine("4) Destination");
-            Console.WriteLine("5) Activation Status");
-            Console.Write("Choice: ");
-            string choice = Console.ReadLine();
-
-            SqlTransaction tx = Db.I.Conn.BeginTransaction();
-            try
+            // Example: prompt for new name (you can expand as needed)
+            Console.Write("New Train Name (leave empty to skip): ");
+            string nm = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(nm))
             {
-                if (choice == "1")
-                {
-                    Console.Write("New Train No: ");
-                    string trainNo = Console.ReadLine();
-                    SqlCommand cmd = new SqlCommand("UPDATE Trains SET TrainNo=@no WHERE TrainId=@id", Db.I.Conn, tx);
-                    cmd.Parameters.AddWithValue("@no", trainNo);
-                    cmd.Parameters.AddWithValue("@id", trainId);
-                    cmd.ExecuteNonQuery();
-                }
-                else if (choice == "2")
-                {
-                    Console.Write("New Train Name: ");
-                    string name = Console.ReadLine();
-                    SqlCommand cmd = new SqlCommand("UPDATE Trains SET TrainName=@name WHERE TrainId=@id", Db.I.Conn, tx);
-                    cmd.Parameters.AddWithValue("@name", name);
-                    cmd.Parameters.AddWithValue("@id", trainId);
-                    cmd.ExecuteNonQuery();
-                }
-                else if (choice == "3")
-                {
-                    Console.Write("New Source: ");
-                    string source = Console.ReadLine();
-                    SqlCommand cmd = new SqlCommand("UPDATE Trains SET Source=@src WHERE TrainId=@id", Db.I.Conn, tx);
-                    cmd.Parameters.AddWithValue("@src", source);
-                    cmd.Parameters.AddWithValue("@id", trainId);
-                    cmd.ExecuteNonQuery();
-                }
-                else if (choice == "4")
-                {
-                    Console.Write("New Destination: ");
-                    string destination = Console.ReadLine();
-                    SqlCommand cmd = new SqlCommand("UPDATE Trains SET Destination=@dst WHERE TrainId=@id", Db.I.Conn, tx);
-                    cmd.Parameters.AddWithValue("@dst", destination);
-                    cmd.Parameters.AddWithValue("@id", trainId);
-                    cmd.ExecuteNonQuery();
-                }
-                else if (choice == "5")
-                {
-                    Console.Write("Activate train? (yes/no): ");
-                    string input = Console.ReadLine().Trim().ToLower();
-                    bool activate = input == "yes";
-
-                    SqlCommand cmdTrain = new SqlCommand("UPDATE Trains SET IsDeleted=@flag WHERE TrainId=@id", Db.I.Conn, tx);
-                    cmdTrain.Parameters.AddWithValue("@flag", activate ? 0 : 1);
-                    cmdTrain.Parameters.AddWithValue("@id", trainId);
-                    cmdTrain.ExecuteNonQuery();
-
-                    SqlCommand cmdClasses = new SqlCommand("UPDATE TrainClasses SET IsDeleted=@flag WHERE TrainId=@id", Db.I.Conn, tx);
-                    cmdClasses.Parameters.AddWithValue("@flag", activate ? 0 : 1);
-                    cmdClasses.Parameters.AddWithValue("@id", trainId);
-                    cmdClasses.ExecuteNonQuery();
-                }
-                else
-                {
-                    Console.WriteLine("Invalid choice.");
-                    tx.Rollback();
-                    return;
-                }
-
-                tx.Commit();
-                Console.WriteLine("Train updated successfully.");
-            }
-            catch (Exception ex)
-            {
-                tx.Rollback();
-                Console.WriteLine("Update failed: " + ex.Message);
+                var cmd = Db.I.Cmd("UPDATE Trains SET TrainName=@n WHERE TrainId=@id");
+                cmd.Parameters.AddWithValue("@n", nm);
+                cmd.Parameters.AddWithValue("@id", trainId);
+                cmd.ExecuteNonQuery();
             }
         }
 
-
         public void ViewAllTrains()
         {
-            SqlCommand cmd = Db.I.Cmd("SELECT TrainId, TrainNo, TrainName, Source, Destination, IsDeleted FROM Trains ORDER BY TrainNo");
-            using (SqlDataReader rd = cmd.ExecuteReader())
+            using (var cmd = Db.I.Cmd("SELECT TrainId, TrainNo, TrainName, Source, Destination FROM Trains ORDER BY TrainNo"))
+            using (var rd = cmd.ExecuteReader())
             {
-                Console.WriteLine("Id No Name Source Destination Deleted");
+                Ui.TableHeader($"{ "Id",-4} {"Train No.",-10}   {"Name",-18} {"From",-18} {"To",-10}");
+                bool any = false;
                 while (rd.Read())
                 {
-                    Console.WriteLine(string.Format("{0,-3} {1,-6} {2,-16} {3,-10} {4,-10} {5}",
-                        rd.GetInt32(0),
-                        rd.GetString(1),
-                        rd.GetString(2),
-                        rd.GetString(3),
-                        rd.GetString(4),
-                        rd.GetBoolean(5) ? "Yes" : "No"));
+                    any = true;
+                    Console.WriteLine(
+                        string.Format("{0,-4}  {1,-10}  {2,-18}  {3,-18}  {4,-10}",
+                        rd.GetInt32(0), rd.GetString(1), rd.GetString(2), rd.GetString(3), rd.GetString(4)));
                 }
+                if (!any) Ui.Warn("No trains.");
             }
         }
 
         public void ViewTrainClasses()
         {
-            SqlCommand cmd = Db.I.Cmd(@"
-        SELECT tc.TrainClassId, t.TrainNo, tc.Class, tc.TotalSeats, tc.CostPerSeat, tc.IsDeleted
-        FROM TrainClasses tc
-        JOIN Trains t ON tc.TrainId = t.TrainId
-        ORDER BY t.TrainNo, tc.Class");
-
-            using (SqlDataReader rd = cmd.ExecuteReader())
+            using (var cmd = Db.I.Cmd(@"
+                SELECT tc.TrainClassId, t.TrainNo, t.TrainName, tc.Class, tc.TotalSeats, tc.CostPerSeat
+                FROM TrainClasses tc
+                JOIN Trains t ON t.TrainId = tc.TrainId
+                ORDER BY t.TrainNo, tc.Class"))
+            using (var rd = cmd.ExecuteReader())
             {
-                Console.WriteLine("ClassId TrainNo Class Seats Price Deleted");
+                Ui.TableHeader($"{"ClassId",-7} {"Train No.",-10} {"Name",-18} {"Class",-6} {"Seats",-5} {"Price",-8}");
+                bool any = false;
                 while (rd.Read())
                 {
-                    Console.WriteLine(string.Format("{0,-7} {1,-6} {2,-5} {3,3} {4,6} {5}",
-                        rd.GetInt32(0),
-                        rd.GetString(1),
-                        rd.GetString(2),
-                        rd.GetInt32(3),
-                        rd.GetDecimal(4),
-                        rd.GetBoolean(5) ? "Yes" : "No"));
+                    any = true;
+                    Console.WriteLine(
+                        string.Format("{0,-7}  {1,-10}  {2,-18}  {3,-6}  {4,-5}  {5,-8}",
+                        rd.GetInt32(0), rd.GetString(1), rd.GetString(2),
+                        rd.GetString(3), rd.GetInt32(4), rd.GetDecimal(5)));
                 }
+                if (!any) Ui.Warn("No classes.");
             }
         }
 
-        public void AddTrainClass(int trainId, string classCode, int totalSeats, decimal price)
+        public void AddTrainClass(int trainId, string cls, int seats, decimal price)
         {
-            SqlCommand check = Db.I.Cmd("SELECT COUNT(*) FROM Trains WHERE TrainId = @id");
-            check.Parameters.AddWithValue("@id", trainId);
-            int exists = Convert.ToInt32(check.ExecuteScalar());
-
-            if (exists == 0)
-            {
-                Console.WriteLine("Error: TrainId does not exist. Please add the train first.");
-                return;
-            }
-
-            SqlCommand cmd = Db.I.Cmd(@"
-        INSERT INTO TrainClasses(TrainId, Class, TotalSeats, CostPerSeat)
-        VALUES(@t, @c, @tot, @p)");
-            cmd.Parameters.AddWithValue("@t", trainId);
-            cmd.Parameters.AddWithValue("@c", classCode);
-            cmd.Parameters.AddWithValue("@tot", totalSeats);
-            cmd.Parameters.AddWithValue("@p", price);
-            cmd.ExecuteNonQuery();
-            Console.WriteLine("Train class added.");
+            trains.UpsertClass(trainId, cls, seats, price);
         }
 
         public void ViewAllBookings()
         {
-            SqlCommand cmd = Db.I.Cmd(@"
-                SELECT r.BookingId, c.CustName, t.TrainName, tc.Class, r.SeatsBooked, r.DateOfTravel, r.TotalCost
+            using (var cmd = Db.I.Cmd(@"
+                SELECT r.BookingId, t.TrainNo, t.TrainName, tc.Class, r.SeatsBooked, r.DateOfTravel, r.TotalCost, r.IsDeleted
                 FROM Reservations r
-                JOIN Customers c ON r.CustId = c.CustId
                 JOIN TrainClasses tc ON r.TrainClassId = tc.TrainClassId
                 JOIN Trains t ON tc.TrainId = t.TrainId
-                ORDER BY r.DateOfBooking DESC");
-
-            using (SqlDataReader rd = cmd.ExecuteReader())
+                ORDER BY r.BookingId DESC"))
+            using (var rd = cmd.ExecuteReader())
             {
-                Console.WriteLine("Id Name Train Class Qty Date Cost");
+                Ui.TableHeader("Id", "No", "Name", "Class", "Qty", "Date", "Total", "Cancelled");
+                bool any = false;
                 while (rd.Read())
                 {
-                    Console.WriteLine(string.Format("{0,-3} {1,-10} {2,-16} {3,-5} {4,3} {5:yyyy-MM-dd} {6,6}",
-                        rd.GetInt32(0),
-                        rd.GetString(1),
-                        rd.GetString(2),
-                        rd.GetString(3),
-                        rd.GetInt32(4),
-                        rd.GetDateTime(5),
-                        rd.GetDecimal(6)));
+                    any = true;
+                    Console.WriteLine(string.Format("{0,-4} {1,-6} {2,-16} {3,-6} {4,3} {5:yyyy-MM-dd} {6,8} {7}",
+                        rd.GetInt32(0), rd.GetString(1), rd.GetString(2), rd.GetString(3),
+                        rd.GetInt32(4), rd.GetDateTime(5), rd.GetDecimal(6),
+                        rd.GetBoolean(7) ? "Yes" : "No"));
                 }
+                if (!any) Ui.Warn("No bookings yet.");
             }
         }
 
         public void ViewAllCancellations()
         {
-            SqlCommand cmd = Db.I.Cmd(@"
-                SELECT CancelId, BookingId, TicketCancelled, AmountRefunded, DateOfCancellation
-                FROM Cancellations
-                ORDER BY DateOfCancellation DESC");
-
-            using (SqlDataReader rd = cmd.ExecuteReader())
+            using (var cmd = Db.I.Cmd(@"
+                SELECT c.CancelId, c.BookingId, c.TicketCancelled, c.AmountRefunded, c.DateOfCancellation
+                FROM Cancellations c
+                ORDER BY c.CancelId DESC"))
+            using (var rd = cmd.ExecuteReader())
             {
-                Console.WriteLine("CancelId BookingId Qty Refund Date");
+                Ui.TableHeader($"{"CancelId",-8} {"BookingId",-9} {"Qty",-3} {"Refund",-8} {"Date"}");
+                bool any = false;
                 while (rd.Read())
                 {
-                    Console.WriteLine(string.Format("{0,-5} {1,-5} {2,-3} {3,6} {4:yyyy-MM-dd}",
-                        rd.GetInt32(0),
-                        rd.GetInt32(1),
-                        rd.GetInt32(2),
-                        rd.GetDecimal(3),
-                        rd.GetDateTime(4)));
+                    any = true;
+                    Console.WriteLine(
+                        string.Format("{0,-8}  {1,-9}  {2,-3}  {3,-8}  {4:yyyy-MM-dd HH:mm}",
+                        rd.GetInt32(0), rd.GetInt32(1), rd.GetInt32(2), rd.GetDecimal(3), rd.GetDateTime(4)));
                 }
+                if (!any) Ui.Warn("No cancellations yet.");
             }
         }
     }

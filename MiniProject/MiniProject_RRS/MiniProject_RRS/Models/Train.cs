@@ -1,4 +1,6 @@
-﻿namespace MiniProject_RRS
+﻿using System;
+
+namespace MiniProject_RRS
 {
     public class Train
     {
