@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Assignment1.Models.Contact>
+
+<h2>Contacts</h2>
+
+<p>
+    @Html.ActionLink("Add Contact", "Create", "Contacts", null, new { @class = "btn btn-primary" })
+</p>
+
+@if (!Model.Any())
+{
+<p>No contacts yet.</p> }
+            else
+            {
+<table class="table">
+    <thead>
+        <tr><th>Name</th><th>Email</th><th></th></tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
+<tr>
+    <td>@(c.FirstName) @(c.LastName)</td>
+    <td>@c.Email</td>
+    <td>
+        @Html.ActionLink("Delete", "Delete", "Contacts", new { id = c.Id }, new { @class = "btn btn-danger btn-sm" })
+    </td>
+</tr>}
+    </tbody>
+</table>}
