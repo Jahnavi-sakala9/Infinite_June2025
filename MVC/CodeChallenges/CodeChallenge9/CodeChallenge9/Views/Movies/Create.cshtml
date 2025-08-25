@@ -1,0 +1,10 @@
+﻿@model Movie
+<h2>Create Movie</h2>
+@using (Html.BeginForm())
+{
+    <p>Name: @Html.TextBoxFor(m => m.MovieName)</p>
+    <p>Director: @Html.TextBoxFor(m => m.DirectorName)</p>
+    <p>Release: @Html.TextBoxFor(m => m.DateOfRelease, "{0:yyyy-MM-dd}", new { type="date" })</p>
+    <input type="submit" value="Save" />
+}
+ 

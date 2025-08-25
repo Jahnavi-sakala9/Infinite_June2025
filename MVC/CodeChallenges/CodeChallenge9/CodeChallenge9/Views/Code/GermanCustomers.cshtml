@@ -1,0 +1,15 @@
+﻿@model IEnumerable<CodeChallenge9.Customer>
+
+<h2>Customers in Germany</h2>
+<table>
+    <tr><th>Name</th><th>Company</th><th>City</th></tr>
+    @foreach (var c in Model)
+    {
+        <tr>
+            <td>@c.ContactName</td>
+            <td>@c.CompanyName</td>
+            <td>@c.City</td>
+        </tr>
+    }
+</table>
+
