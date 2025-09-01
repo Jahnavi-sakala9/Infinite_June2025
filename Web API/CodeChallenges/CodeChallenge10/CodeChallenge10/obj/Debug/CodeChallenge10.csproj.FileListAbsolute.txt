@@ -86,3 +86,6 @@ C:\Jahnavi\Infinite\Web API\CodeChallenges\CodeChallenge10\CodeChallenge10\bin\E
 C:\Jahnavi\Infinite\Web API\CodeChallenges\CodeChallenge10\CodeChallenge10\bin\EntityFramework.SqlServer.dll
 C:\Jahnavi\Infinite\Web API\CodeChallenges\CodeChallenge10\CodeChallenge10\bin\EntityFramework.xml
 C:\Jahnavi\Infinite\Web API\CodeChallenges\CodeChallenge10\CodeChallenge10\bin\EntityFramework.SqlServer.xml
+C:\Jahnavi\Infinite\Web API\CodeChallenges\CodeChallenge10\CodeChallenge10\bin\Swashbuckle.Core.dll
+C:\Jahnavi\Infinite\Web API\CodeChallenges\CodeChallenge10\CodeChallenge10\bin\WebActivatorEx.dll
+C:\Jahnavi\Infinite\Web API\CodeChallenges\CodeChallenge10\CodeChallenge10\obj\Debug\CodeChallenge10.csproj.AssemblyReference.cache
