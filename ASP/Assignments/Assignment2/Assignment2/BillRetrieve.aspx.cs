@@ -10,7 +10,13 @@ namespace Assignment2
     public partial class BillRetrieve : System.Web.UI.Page
     {
         ElectricityBoard _board = new ElectricityBoard();
-
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (Session["auth"] == null)   // not logged in
+            {
+                Response.Redirect("Login.aspx");
+            }
+        }
         protected void btnGet_Click(object sender, EventArgs e)
         {
             if (!int.TryParse(txtN.Text.Trim(), out int n) || n <= 0) return;
